@@ -1,6 +1,7 @@
 package com.poseidon.design.C35;
 
 import com.google.common.annotations.VisibleForTesting;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,20 +27,43 @@ public class RandomIdGenerator implements LogTraceIdGenerator {
     private static final Logger logger = LoggerFactory.getLogger(com.poseidon.design.C34.IdGenerator.class);
 
 
+    /**
+     * Get the local hostname and
+     * extract the last field of the name string splitted by delimiter '.'.
+     *
+     * @return the last field of hostname. Returns null if hostname is not obtained.
+     */
     private String getLastfieldOfHostName() throws UnknownHostException {
         String hostName  = InetAddress.getLocalHost().getHostName();
 
         return getLastSubstrSplittedByDot(hostName);
     }
 
+    /**
+     * Get the last field of {@hostName} splitted by delemiter '.'.
+     *
+     * @param hostname should not be null
+     * @return the last field of {@hostName}. Returns empty string if {@hostName} is empty string.
+     */
     @VisibleForTesting
     protected String getLastSubstrSplittedByDot(String hostname) {
+        if (StringUtils.isBlank(hostname)) return null;
         String[] tokens = hostname.split("\\.");
         return tokens[tokens.length - 1];
     }
 
+    /**
+     * Generate random string which
+     * only contains digits, uppercase letters and lowercase letters.
+     *
+     * @param length should not be less than 0
+     * @return the random string. Returns empty string if {@length} is 0
+     */
     @VisibleForTesting
     protected String generateRandomAlphameric(int length) {
+        if (length <= 0){
+            return "";
+        }
         char[] randomChars = new char[length];
         int count = 0;
         Random random = new Random();
@@ -58,6 +82,11 @@ public class RandomIdGenerator implements LogTraceIdGenerator {
         return new String(randomChars);
     }
 
+    /**
+     * Generate the random ID. The IDs may be duplicated only in extreme situation.
+     *
+     * @return an random ID
+     */
     public  String generate() {
         String id = "";
 
