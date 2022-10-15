@@ -28,7 +28,7 @@ public class IdGenerator3 {
         return id.getAndIncrement();
     }
 
-    public IdGenerator3 getInstance(){
+    public static IdGenerator3 getInstance(){
         if (instance == null){
             synchronized(IdGenerator3.class) {
                 if (instance == null){

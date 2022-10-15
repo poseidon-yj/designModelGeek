@@ -15,7 +15,7 @@ public class IdGenerator {
     public IdGenerator() {
     }
 
-    public IdGenerator getInstance(){
+    public static IdGenerator getInstance(){
         return instance;
     }
 
