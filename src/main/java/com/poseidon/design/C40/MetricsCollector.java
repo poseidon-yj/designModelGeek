@@ -17,6 +17,10 @@ import java.util.concurrent.Executors;
 public class MetricsCollector {
     private static final int DEFAULT_STORAGE_THREAD_POOL_SIZE = 20;
 
+    public MetricsCollector() {
+        this(new RedisMetricsStorage(), DEFAULT_STORAGE_THREAD_POOL_SIZE);
+    }
+
     private MetricsStorage metricsStorage;
     private EventBus eventBus;
 
